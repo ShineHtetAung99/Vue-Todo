@@ -56,6 +56,7 @@ export default {
         action: this.newTask,
         done: false,
       });
+      localStorage.setItem('myLocalTask', JSON.stringify(this.tasks));
       this.newTask = "";
     }
   }

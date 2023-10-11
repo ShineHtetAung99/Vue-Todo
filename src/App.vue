@@ -9,6 +9,9 @@
           <div class="col">
             <input type="button" value="Add" class="btn btn-secondary" @click="addTask()">
           </div>
+          <div class="col">
+            <button class="btn btn-warning" @click="deleteTasks()">Delete Tasks</button>
+          </div>
         </div>
 
         <div v-if="filterTask.length > 0">
@@ -56,10 +59,23 @@ export default {
         action: this.newTask,
         done: false,
       });
-      localStorage.setItem('myLocalTask', JSON.stringify(this.tasks));
+      this.storeData();
       this.newTask = "";
+    },
+    deleteTasks() {
+      this.tasks = this.tasks.filter((v) => !v.done);
+      this.storeData();
+    },
+    storeData() {
+      localStorage.setItem('myLocalTask', JSON.stringify(this.tasks));
     }
-  }
+  },
+  mounted() {
+    let data = localStorage.getItem('myLocalTask');
+    if (data !== null) {
+      this.tasks = JSON.parse(data);
+    }
+  },
 }
 </script>
 
